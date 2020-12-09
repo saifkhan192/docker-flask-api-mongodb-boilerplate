@@ -1,0 +1,17 @@
+FROM node:12 as baseImage
+RUN apt-get update && apt-get install bash
+
+WORKDIR /app
+FROM baseImage as phase1
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install
+
+FROM phase1 as phase2
+COPY . ./
+
+ENTRYPOINT ["npm", "run", "production"]
+# ENTRYPOINT ["npm", "run", "dev"]

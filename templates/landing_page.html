@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A Travel and Tourism Website">
+    <meta name="author" content="">
+    <meta name="version" content="2">
+    <title>Travel Beautiful Pakistan</title>
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="{{ static_resource('css/landing_page_style.css') }}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.fullpage/2.5.9/jquery.fullPage.min.js"></script>
+    <style>
+        .form-top,
+        .form-bottom {
+            overflow: hidden;
+            padding: 0 25px 15px 25px;
+            background: #444;
+            background: rgba(0, 0, 0, 0.35);
+            text-align: left
+        }
+        h1,
+        h3 {
+            color: white
+        }
+        h1 {
+            text-shadow: 1px 1px 5px #000;
+            color: #fff;
+            font-size: 3.5em !important
+        }
+        .header {
+            background: transparent;
+        }
+        .body {
+            width: 100%;
+            background: center center no-repeat;
+            background-attachment: fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            transition: background 0.5s linear;
+        }
+        .h3 {
+            color: #fff;
+            text-shadow: 1px 1px 5px #000;
+            font-size: 25px;
+            line-height: 35px;
+        }
+        h3 A {
+            color: #fff;
+            text-shadow: 1px 1px 5px #000;
+            font-size: 0.6em;
+            line-height: 35px;
+            text-decoration: none
+        }
+        h3 A:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .header h3 {
+            color: #fff;
+            text-shadow: 1px 1px 5px #000;
+            font-size: 25px;
+            line-height: 35px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="body" id="">
+    <div id="fullpage">
+        <div class="section " id="section0">
+            <header id="top" class="header">
+                <div class="text-vertical-center " style="text-align: center;">
+                    <h1>Travel Beautiful Pakistan</h1>
+                    <a href="#subscribe" id="subscribeBtn" style="background: grey;opacity: 0.8;" 
+                        onclick="$.fn.fullpage.moveSectionDown();return false;" class="btn btn-dark btn-lg">
+						Subscribe Newsletter
+                    </a>
+                    <br>
+                    <br>
+                    <a href="/admin/subscribersview/" style="background: grey;opacity: 0.8;" 
+                        class="btn btn-dark btn-lg">
+						Admin Section
+                    </a>
+                    <a href="/login" style="background: grey;opacity: 0.8;" 
+                        class="btn btn-dark btn-lg">
+						Login
+                    </a>
+                </div>
+            </header>
+        </div>
+        <div class="section" id="subscribe">
+            <div class="inner-bg" style="padding-bottom:30px">
+                <div class="container">
+                    <div class="row" style="text-align: center;">
+                        <div class="col-sm-6 form-box wow fadeInUp" style="float: none;display: inline-block;width: 35%;">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Subscribe</h3>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form role="form" action="/api/subscriber" method="post" onsubmit="return formSubmitHandler(this);">
+                                    <p id="mc-notification" class="jsResponceDiv" 
+                                        style="color: aquamarine;font-weight: bold;display: none;">
+                                        <span class="alert alert-error">
+											<i class="fa fa-exclamation-triangle"></i>Please enter a value
+										</span>
+                                    </p>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-first-name">Name</label>
+                                        <input type="text" name="name" placeholder="Name..." class="form-control" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-email">Email</label>
+                                        <input type="email" name="email" placeholder="Email..." class="form-control" required />
+                                    </div>
+                                    <button type="submit" class="btn">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#fullpage').fullpage({});
+        });
+        function formSubmitHandler(form) {
+            formId = (form.name) ? form.name : form.id;
+            form = jQuery(form);
+            form.addClass("frmLoading");
+            form.find(".jsLoading").show();
+            form.find(".jsSubmit").hide();
+            jQuery.post(form.attr("action"), form.serialize(), function(responce) {
+                form.removeClass("frmLoading");
+                form.find(".jsLoading").hide();
+                form.find(".jsSubmit").show();
+                if (responce.message) {
+                    form.find(".jsResponceDiv").hide().html(responce.message).slideToggle();
+                    form[0].reset();
+                } else
+                    form.find(".jsResponceDiv").html("").hide();
+            })
+            return false;
+        }
+
+        function randomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        var cur = 1;
+        var staticRoot = "{{ static_resource('images/landing_page/') }}";
+        function altrt_bg() {
+            if (cur + 1 < 10)
+                cur++;
+            else
+                cur = 1;
+            img = staticRoot + randomInteger(1, 4) + ".jpg";;
+            imgobj = new Image();
+            imgobj.src = img;
+            imgobj.onload = function() {
+                $('.body').css('background-image', 'url(' + img + ')');
+                setTimeout(function() {
+                    altrt_bg();
+                }, 4000);
+            };
+        }
+        altrt_bg();
+    </script>
+</body>
+</html>

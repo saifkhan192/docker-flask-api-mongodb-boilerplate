@@ -1,0 +1,39 @@
+{
+  "name": "react-app",
+  "version": "1.0.0",
+  "description": "a boiler plate for react applications",
+  "author": "saifkhan192",
+  "license": "MIT",
+  "scripts": {
+    "watch": "./node_modules/.bin/webpack --watch --config webpack.config.dev.js",
+    "dev": "./node_modules/.bin/webpack --config webpack.config.dev.js",
+    "production": "./node_modules/.bin/webpack --config webpack.config.production.js"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react": "^16.13.1",
+    "redux-thunk": "^2.3.0",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.1",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-env": "^7.10.1",
+    "@babel/preset-react": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "css-loader": "^3.5.3",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "react-hot-loader": "^4.12.21",
+    "sass-loader": "^8.0.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2",
+    "webpack": "^4.43.0"
+  }
+}

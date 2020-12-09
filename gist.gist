@@ -1,0 +1,3 @@
+pip install flask-sqlacodegen
+# create flask models from db tables
+flask-sqlacodegen --flask --outfile sqlacodegen_models.py mysql+mysqldb://root:root@mysql:3306/abc

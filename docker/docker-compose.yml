@@ -1,0 +1,52 @@
+version: '3.4'
+services:
+
+  flask_app:
+    build:
+      context: ../
+      dockerfile: ./docker/DockerfileApp
+    ports:
+      - 80:5000
+      - 5678:5678 #ptvsd debugger 
+    container_name: flask_app
+    env_file:
+      - ../.env
+    environment:
+      PYTHONPYCACHEPREFIX: "/app/docker/py_cache"
+    volumes:
+      - ../:/app
+      - ./bash_history.log:/root/.bash_history #container bash history will remain persist
+    links:
+      - mongodb:mongodb
+      - mysqldb
+
+  mongodb:
+    image: mongo:3.6
+    container_name: mongodb
+    command: mongod --noprealloc
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo/data:/data/db
+
+  mysqldb:
+    build:
+      context: ../
+      dockerfile: ./docker/DockerfileMysql
+    container_name: mysqldb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+
+  react_app:
+    build:
+      context: ../react
+      dockerfile: ../docker/DockerfileNode
+    container_name: react_app
+    volumes:
+      - ../react:/app
+      - ../static/dist:/app/web-dist

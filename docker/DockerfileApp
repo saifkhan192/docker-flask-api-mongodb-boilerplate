@@ -1,0 +1,21 @@
+FROM python:3 as baseImage
+WORKDIR /app
+COPY requirements.txt ./
+RUN pip install -r requirements.txt --progress-bar pretty
+
+############## Start new image for debugger ############## 
+FROM baseImage as debug
+EXPOSE 8000
+EXPOSE 80
+EXPOSE 5000
+ENV GUNICORN_CMD_ARGS="--bind=0.0.0.0:80 --chdir=./ --reload "
+
+RUN pip install ptvsd
+############## End new image for debugger ############## 
+
+FROM debug as debug1
+# ENTRYPOINT ["./gunicorn_starter.sh"]
+# ENTRYPOINT ["gunicorn run_server:app"]
+# ENTRYPOINT ["gunicorn", "run_server:app", " --log-file - --log-level debug --preload --workers 1"]
+
+CMD [ "python", "/app/application/run_server.py" ]

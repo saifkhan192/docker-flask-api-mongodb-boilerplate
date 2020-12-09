@@ -1,0 +1,107 @@
+swagger: "2.0"
+
+info:
+  title: API description
+  description: API description
+  version: 1.0.0
+  contact:
+    email: "saifkhan912@gmail.com"
+
+
+paths:
+  /api/subscriber:
+    post:
+      summary: Create new subscriber
+      description: Create new subscriber
+      tags:
+        - subscription
+      parameters:
+        - in: formData
+          name: "name"
+          type: "string"
+          description: "Name"
+        - in: formData
+          name: "email"
+          type: "string"
+          description: "Email"
+      responses:
+        200:
+          description: |
+            {"message": "Thank you for subscribing."}
+
+    get:
+      summary: Get subscribes List
+      description: Get subscribes List
+      tags:
+        - subscription
+      parameters:
+        - in: query
+          name: "email"
+          type: "string"
+          description: "Filter By Email (optional)"
+      responses:
+        200:
+          description: |
+            {"subscribers": [List of subscribers]}
+
+
+  /api/survey:
+    put:
+      summary: Collect a survey
+      consumes:
+        - application/json
+      tags:
+        - survey
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          description: Your Name
+        - in: formData
+          name: position
+          type: string
+          description: Position/Title for example Senior Software Engineer
+        - in: formData
+          name: feedback
+          type: string
+          enum: [Very satisfied, Somewhat satisfied,Neutral,Very dissatisfied]
+          description: How would you describe your overall level of job satisfaction?
+          required: true
+
+      responses:
+        200:
+          description: |
+            {"message": "Your survey has been received. Thank you."}
+        400:
+          description: |
+            {"errors":{"name":["required field"]}}
+
+    get:
+      summary: Get surveys List
+      description: Get surveys List
+      tags:
+        - survey
+      responses:
+        200:
+          description: |
+            [List of surveys]
+
+  /api/sendemail:
+    post:
+      summary: sendemail
+      tags:
+        - email
+      parameters:
+        - in: formData
+          name: email
+          type: string
+          description: To Email
+        - in: formData
+          name: message
+          type: string
+          description: Email Message
+      responses:
+        200:
+          description: |
+            "message": "Email send."
+
