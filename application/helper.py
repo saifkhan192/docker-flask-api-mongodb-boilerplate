@@ -66,3 +66,13 @@ def send_email(recipient, subject, message):
     except Exception as e:
         print(e)
         return False
+
+def start_debugger():
+    if os.environ.get('VSCODE_DEBUG'):
+        debugAddress = os.environ.get(
+            'DEBUG_CONFIG', "0.0.0.0:5678").split(":")
+        try:
+            import ptvsd
+            ptvsd.enable_attach(address=debugAddress)
+        except Exception as ex:
+            pass

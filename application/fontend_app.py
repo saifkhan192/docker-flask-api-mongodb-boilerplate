@@ -143,6 +143,10 @@ def get_docs1():
 @fontend_app.route('/api/docs2')
 def get_docs2():
     return render_template('swaggerui-theme1.html')
+
+@fontend_app.route('/api/docs3')
+def get_docs3():
+    return render_template('swaggerui-theme3.html')
 # Swagger doc end
 
 
